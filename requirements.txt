@@ -1,0 +1,15 @@
+# Kaggle's GPU image provides most of these; the notebooks install mamba-ssm and causal-conv1d themselves.
+torch>=2.1
+torchvision
+numpy
+opencv-python
+scikit-learn
+scipy
+pillow
+matplotlib
+pandas
+timm
+einops
+triton
+causal-conv1d>=1.2.0
+mamba-ssm

@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.pth
+*.pt
+run/
+eval_v3/
+demo/
+ForMa_repo/
+.ipynb_checkpoints/

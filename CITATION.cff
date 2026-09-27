@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite it as below."
+title: "RAFT-Net: Boundary-Aware Forensic Fusion for Generalizable Mamba-Based Image Forgery Localization"
+type: software
+authors:
+  - given-names: Pachappagari Naveen
+    family-names: Kumar
+  - given-names: Chakali Pavan
+    family-names: Kumar
+  - given-names: Thatte
+    family-names: Mohan
+  - given-names: Kammari Jaya
+    family-names: Prakash
+  - given-names: B. V. Satish
+    family-names: Babu
+date-released: 2026-09-26
+license: MIT
