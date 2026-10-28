@@ -1,13 +1,15 @@
 # RAFT-Net: Boundary-Aware Forensic Fusion for Generalizable Mamba-Based Image Forgery Localization
 
-Code for the paper *RAFT-Net: Boundary-Aware Forensic Fusion for Generalizable Mamba-Based Image Forgery Localization*
-by Pachappagari Naveen Kumar, Chakali Pavan Kumar, Thatte Mohan, Kammari Jaya Prakash and B. V. Satish Babu
-(School of Computer Science and Engineering, VIT-AP University).
+Source code for the manuscript *RAFT-Net: Boundary-Aware Forensic Fusion for Generalizable Mamba-Based Image Forgery
+Localization*, submitted to IEEE Access (2026), by B. V. Satish Babu, Pachappagari Naveen Kumar, Chakali Pavan Kumar,
+Thatte Mohan and Kammari Jaya Prakash (School of Computer Science and Engineering, VIT-AP University, Amaravati, India).
+Corresponding author: B. V. Satish Babu (satishbabu.bv@vitap.ac.in).
 
-RAFT-Net builds on [ForMa](https://github.com/multimediaFor/ForMa). It keeps ForMa's VMamba-tiny encoder and
-pixel-shuffle decoder, passes 32 channels of noise features (SRM, Bayar, Noiseprint++) to the decoder instead of 3,
-and adds a boundary head that learns the edges of tampered regions during training. All models were trained on
-CASIA v2 only (Protocol 1) and tested on CASIA v1, Columbia and IMD2020, three times with different seeds.
+RAFT-Net (Residual-Aware Fusion with Tamper-boundary supervision) builds on [ForMa](https://github.com/multimediaFor/ForMa).
+It keeps ForMa's VMamba-tiny encoder and pixel-shuffle decoder, passes 32 channels of noise features (SRM, Bayar,
+Noiseprint++) to the decoder instead of ForMa's three-channel mixture, and adds a boundary head that learns the edges of
+tampered regions and is used only in training. All models are trained on CASIA v2 only (Protocol 1) and tested on
+CASIA v1, Columbia and IMD2020; most configurations were trained three times, with seeds 1221, 1222 and 1223.
 
 ![RAFT-Net architecture](assets/architecture.png)
 
@@ -23,14 +25,22 @@ test images (920, 180 and 2,010).
 | MPC (best published Protocol 1 average) | 44.8 | 67.6 | 48.5 | 48.5 |
 
 On CASIA v2 validation, RAFT-Net reaches 81.0 ± 0.2 F1 on clean images and stays 1.6 to 3.3 points ahead of ForMa
-after JPEG recompression (quality 90 to 30) and a social-network-style processing chain. See the paper for the paired
+after JPEG recompression (quality 90 to 30) and a social-network-style processing chain. The paper reports the paired
 tests, the ablation of every component and the analysis of the components we removed.
+
+## Where each result of the paper comes from
+
+| Paper | Notebook |
+|---|---|
+| All trained models: RAFT-Net, ForMa, the ablations and the widened ForMa | `notebooks/01_train.ipynb` |
+| Comparison with published methods (Section V-A), paired comparison with ForMa (V-B), ablation study (V-C), robustness to compression (V-D), saliency check (V-G) | `notebooks/02_evaluate.ipynb` |
+| Model size and speed (V-E), qualitative examples (V-F) | `notebooks/03_demo.ipynb` |
 
 ## Repository layout
 
 ```
 notebooks/01_train.ipynb      training (one or two jobs per session, T4 x2)
-notebooks/02_evaluate.ipynb   evaluation of every trained model, all tables of the paper
+notebooks/02_evaluate.ipynb   evaluation of every trained model, all result tables of the paper
 notebooks/03_demo.ipynb       predictions on single images, showcase figures, speed benchmark
 raftnet/raftnet.py            RAFT-Net model and all variants (imports ForMa's modules)
 raftnet/common.py             data pipeline, augmentation, losses, schedule
@@ -46,8 +56,9 @@ there. The copies in `raftnet/` are provided for reading and reuse.
 
 ## Requirements
 
-We ran everything on Kaggle with two NVIDIA T4 GPUs and Internet access enabled. The notebooks install what Kaggle
-does not provide. To run elsewhere you need a CUDA GPU and the packages in `requirements.txt`, plus:
+Each training run uses one NVIDIA T4 GPU. We ran everything on Kaggle with the *GPU T4 x2* accelerator, which lets the
+training notebook run two jobs side by side, and with Internet access enabled. The notebooks install what Kaggle does
+not provide. To run elsewhere you need a CUDA GPU and the packages in `requirements.txt`, plus:
 
 * ForMa: `git clone https://github.com/multimediaFor/ForMa.git` (the Noiseprint++ weights come with it);
 * the ImageNet-pretrained VMamba-tiny checkpoint `vssm1_tiny_0230s_ckpt_epoch_264.pth` from the
@@ -63,8 +74,8 @@ does not provide. To run elsewhere you need a CUDA GPU and the packages in `requ
 | IMD2020 | test | 2,424 | 2,010 |
 
 Attach the datasets as notebook inputs. The notebooks search the attached inputs, pair every tampered image with its
-mask and print what they found, so the folder names do not have to follow a fixed layout. Please obtain the datasets
-from their original sources and respect their licences.
+mask and print what they found, so the folder names do not have to follow a fixed layout. The datasets are not
+included here; please obtain them from their original sources and respect their licences.
 
 ## Training
 
@@ -103,18 +114,18 @@ own images and measures parameters, latency and GPU memory.
 
 ## Checkpoints
 
-Trained checkpoints are not stored in this repository because of their size (about 150 MB each).
+Trained checkpoints are not included because of their size (about 150 MB each).
 
 ## Citation
 
-The paper is under review. Until it is published, please cite this repository:
+The paper is under review at IEEE Access. Until it is published, please cite:
 
 ```bibtex
-@misc{raftnet2026,
-  title  = {RAFT-Net: Boundary-Aware Forensic Fusion for Generalizable Mamba-Based Image Forgery Localization},
-  author = {Kumar, Pachappagari Naveen and Kumar, Chakali Pavan and Mohan, Thatte and Prakash, Kammari Jaya and Babu, B. V. Satish},
+@misc{babu2026raftnet,
+  title  = {{RAFT-Net}: Boundary-Aware Forensic Fusion for Generalizable Mamba-Based Image Forgery Localization},
+  author = {Babu, B. V. Satish and Kumar, Pachappagari Naveen and Kumar, Chakali Pavan and Mohan, Thatte and Prakash, Kammari Jaya},
   year   = {2026},
-  note   = {Code: https://github.com/[account]/RAFT-Net}
+  note   = {Manuscript submitted to IEEE Access. Code: https://github.com/naveenk2608/RAFT-Net}
 }
 ```
 
